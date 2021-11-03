@@ -1,3 +1,5 @@
+import { axios } from "../../lib/axios";
+
 export const mapService = {
     initMap,
     addMarker,
@@ -9,7 +11,7 @@ export const mapService = {
 var gMap;
 let infoWindow
 
-function initMap(lat = 32.0749831, lng = 34.9120554) {
+function initMap(lat = 32.06694, lng = 34.77778) {
     console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
@@ -32,7 +34,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     position: mapsMouseEvent.latLng,
                 });
                 infoWindow.setContent(
-                    `<p>What is the name?</p>
+                    `<p>Under what name do you want to save this location?</p>
                     <p> </p>
                     <input class="gmap-input" data-lat="${mapsMouseEvent.latLng.lat()}" data-lng="${mapsMouseEvent.latLng.lng()}" hidden/>
                     <input class="user-input" type="text" value="" />
@@ -64,9 +66,9 @@ function getInfoWindow() {
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
-    const API_KEY = 'AIzaSyAiwks8bz483lqJ9B_71_Q0LqoN6LKT5LE'; //Enter your API Key
+    const API_KEY = 'AIzaSyAUa9etRbJHXatY5NPGcT4Qej9HqCsTqTg'; //Enter your API Key
     var elGoogleApi = document.createElement('script');
-    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAiwks8bz483lqJ9B_71_Q0LqoN6LKT5LE`;
+    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAUa9etRbJHXatY5NPGcT4Qej9HqCsTqTg`;
     elGoogleApi.async = true;
     document.body.append(elGoogleApi);
     return new Promise((resolve, reject) => {
@@ -76,15 +78,11 @@ function _connectGoogleApi() {
 }
 
 function searchLocation() {
-    if (window.google) return Promise.resolve()
-    var elGoogSearchApi = document.createElement('script');
-    elGoogSearchApi.src = `https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway+Mountain+View,+CA&key=YOUR_API_KEY+Mountain+View,+CA&key=AIzaSyAiwks8bz483lqJ9B_71_Q0LqoN6LKT5LE`;
-    console.log(' elGoogSearchApi.src', elGoogSearchApi.src);
-
-    elGoogSearchApi.async = true;
-    document.body.append(elGoogSearchApi);
-    return new Promise((resolve, reject) => {
-        elGoogSearchApi.onload = resolve;
-        elGoogSearchApi.onerror = () => reject('Google script failed to load')
-    })
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${val}=AIzaSyAUa9etRbJHXatY5NPGcT4Qej9HqCsTqTg`)
+        .then(res => {
+            let data = res.data.results[0].geometry.searchLocation
+            var laLenLng = new google.maps.LatLng(dana.lat, data.lng);
+            gMap.panTo(laLenLng)
+        }) 
 }
+

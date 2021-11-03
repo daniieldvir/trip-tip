@@ -7,8 +7,9 @@ body {
 
 .btn-section {
     display: flex;
-    width: 700px;
-    height: 40px;    
+    width: 800px;
+    height: 40px; 
+
 }
 
 .btn-design {

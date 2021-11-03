@@ -2,7 +2,6 @@ import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
 
-
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
@@ -88,6 +87,7 @@ function onSaveLocation() {
     infoWindows.close()
 }
 
-function onSearchLocation() {
-    mapService.searchLocation()
+function onSearchLocation(val) {
+    mapService.sendLocation(val)
+    document.querySelector('user-pos').innerHTML = val
 }
