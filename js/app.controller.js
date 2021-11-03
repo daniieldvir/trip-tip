@@ -88,6 +88,6 @@ function onSaveLocation() {
 }
 
 function onSearchLocation(val) {
-    mapService.sendLocation(val)
-    document.querySelector('user-pos').innerHTML = val
+    mapService.searchLocation(val)
+    document.querySelector('.user-pos').innerHTML = val
 }

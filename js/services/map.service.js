@@ -1,11 +1,11 @@
-import { axios } from "../../lib/axios";
+// import { axios } from "../../lib/axios.js";
 
 export const mapService = {
     initMap,
     addMarker,
     panTo,
     getInfoWindow,
-    searchLocation
+    searchLocation,
 }
 
 var gMap;
@@ -68,7 +68,7 @@ function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
     const API_KEY = 'AIzaSyAUa9etRbJHXatY5NPGcT4Qej9HqCsTqTg'; //Enter your API Key
     var elGoogleApi = document.createElement('script');
-    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAUa9etRbJHXatY5NPGcT4Qej9HqCsTqTg`;
+    elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}`;
     elGoogleApi.async = true;
     document.body.append(elGoogleApi);
     return new Promise((resolve, reject) => {
@@ -77,10 +77,12 @@ function _connectGoogleApi() {
     })
 }
 
-function searchLocation() {
+function searchLocation(val) {
     return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${val}=AIzaSyAUa9etRbJHXatY5NPGcT4Qej9HqCsTqTg`)
+    .then(res => console.log(res))
         .then(res => {
-            let data = res.data.results[0].geometry.searchLocation
+        
+            let data = res.data.results[0].geometry.location
             var laLenLng = new google.maps.LatLng(dana.lat, data.lng);
             gMap.panTo(laLenLng)
         }) 

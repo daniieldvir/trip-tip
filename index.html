@@ -14,15 +14,15 @@
         <button onclick="onAddMarker()" class="btn-add-marker btn-design">Add Marker Speific Location</button>
         <button onclick="onGetUserPos()" class="btn-user-pos btn-design">Take me to my location</button>
         <div class="search-bar btn-section">
-            <input id="show-markers" type="text" value="" placeholder="Enter Location" />
-            <button onclick="onSearchLocation(value)" class="btn-pan btn-design">go</button>
+            <input id="show-markers" type="search" value="" placeholder="Enter Location" onchange="onSearchLocation(value)"/>
+            <input class="input-btn btn-design" type="submit">
         </div>
     </section>
 
     <section>
         <p>You are at: <span class="user-pos"></span></p>
     </section>
-    
+
     <section class="infor">
         <div class="weather"></div>
         <div class="location-table"></div>
@@ -30,7 +30,7 @@
     </section>
     <p>Saved Locations: <span class="locs"></span></p>
 
-
+    <script src="lib/axios.js"></script>
     <script type="module" src="js/app.controller.js"></script>
 </body>
 
