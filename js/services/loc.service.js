@@ -1,4 +1,3 @@
-import { utilsService } from './js/services/utils.js'
 
 export const locService = {
     getLocs
