@@ -2,18 +2,21 @@ import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
 
+
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onSaveLocation = onSaveLocation;
+window.onDelete = onDelete;
 
 function onInit() {
     mapService.initMap()
         .then(() => {
             console.log('Map is ready');
             locService.getLocs()
+           onGetLocs()
         })
         .catch(() => console.log('Error: cannot init map'));
 }
@@ -35,7 +38,22 @@ function onGetLocs() {
     locService.getLocs()
         .then(locs => {
             console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs)
+            var strHtml = locs.map((loc) => {
+                return `
+                <div class="saved-location"> 
+                <p class:"id">Location id: ${loc.id}</p>
+                <p class:"name">Location Name: ${loc.name}</p>
+                <p class:"lat">Location Lat: ${loc.lat}</p>
+                <p class:"lng">Location Lng: ${loc.lng}</p>
+                <p class:"createdAt"> Location created At: ${loc.updatedAt}</p>
+                <p class:"updatedAt">Location updated At: ${loc.updatedAt}</p>
+                <button onclick="onPanTo(${loc.lat},${loc.lng})" class="btn-pan btn-design">Go</button>
+                <button onclick="onDelete('${loc.id}')" class="btn-pan btn-design">Delete</button>
+
+
+                </div>`
+            })  
+            document.querySelector('.locs').innerHTML = strHtml.join('')
         })
 }
 
@@ -51,9 +69,17 @@ function onGetUserPos() {
             console.log('err!!!', err);
         })
 }
-function onPanTo() {
-    console.log('Panning the Map');
-    mapService.panTo(35.6895, 139.6917);
+function onPanTo(lat, lng) {
+    console.log(lat);
+        console.log(lng);
+
+    mapService.panTo(lat, lng);
+}
+
+function onDelete(id) {
+    // console.log(id);
+    locService.deleteLoc(id)
+    onGetLocs()
 }
 
 function onSaveLocation() {

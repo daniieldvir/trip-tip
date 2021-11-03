@@ -1,10 +1,8 @@
 
 body {
     background-color: rgb(240, 147, 60);
-}
-
-h1 {
     font-family: 'Roboto'
+
 }
 
 .btn-section {
@@ -21,5 +19,19 @@ h1 {
 }
 
 .map {
-    margin-top: 50px;
+    margin: 50px;
+}
+
+.saved-location {
+    background-color: antiquewhite;
+    margin-right: 10px;
+    text-align: center;
+    width: 270px;
+    font-size: 14px
+}
+
+.locs {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }

@@ -13,8 +13,13 @@
     <section class="btn-section">
         <button onclick="onAddMarker()" class="btn-add-marker btn-design">Add Marker Speific Location</button>
         <button onclick="onGetUserPos()" class="btn-user-pos btn-design">My Location</button>
-        <button onclick="onGetLocs()" class="btn-get-locs btn-design">Get Locations</button>
-        <button onclick="onPanTo()" class="btn-pan btn-design">Pan Map to Tokyo</button>
+
+        <div class="search-bar btn-section">
+            <input id="show-markers" type="text" value="Enter Location" />
+            <button onclick="onPanTo()" class="btn-pan btn-design">go</button>
+        </div>
+
+
     </section>
     <section>
         <div class="weather"></div>
@@ -23,9 +28,8 @@
 
 
     </section>
-
     <p>You are at: <span class="user-pos"></span></p>
-    <p>Locations: <span class="locs"></span></p>
+    <p>Saved Locations: <span class="locs"></span></p>
 
 
     <script type="module" src="js/app.controller.js"></script>

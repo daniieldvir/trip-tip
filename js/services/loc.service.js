@@ -2,7 +2,8 @@ import { utils } from './utils.service.js'
 import { storageService } from './storage.service.js'
 export const locService = {
     getLocs,
-    saveLocation
+    saveLocation,
+    deleteLoc
 }
 const KEY = 'locationDb'
 
@@ -22,9 +23,7 @@ function getLocs() {
         },
     ]
     return new Promise((resolve, reject) => {
-        setTimeout(() => {
             resolve(locs);
-        }, 2000)
     });
 }
 
@@ -39,4 +38,10 @@ function getEmptyLocation(name, lat, lng){
         id: utils.makeId(), name, lat, lng,
         createdAt: Date.now(), updatedAt: Date.now()
     }
+}
+
+function deleteLoc(id) {
+    let idx = locs.findIndex((loc)=>loc.id === id)
+    locs.splice(idx,1)
+    storageService.saveToStorage(KEY,locs)
 }
