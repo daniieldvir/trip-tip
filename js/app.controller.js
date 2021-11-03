@@ -57,7 +57,11 @@ function onPanTo() {
 }
 
 function onSaveLocation() {
-    const name = document.querySelector('#user-input').value
-    console.log(name)
-    locService.saveLocation(name)
+    const name = document.querySelector('.user-input').value
+    const lat = document.querySelector('.gmap-input').dataset.lat
+    const lng = document.querySelector('.gmap-input').dataset.lng
+    console.log(name, lat, lng)
+    locService.saveLocation(name, lat, lng)
+    const infoWindows = mapService.getInfoWindow()
+    infoWindows.close()
 }

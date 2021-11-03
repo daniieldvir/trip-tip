@@ -29,7 +29,7 @@ function getLocs() {
 }
 
 function saveLocation(name, lat, lng){
-    const location = getEmptyLocation(name)
+    const location = getEmptyLocation(name, lat, lng)
     locs.push(location)
     storageService.saveToStorage(KEY, locs)
 }
