@@ -1,6 +1,5 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
-import { utilsService } from './js/services/utils.js'
 
 
 window.onload = onInit;
@@ -8,11 +7,13 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.onSaveLocation = onSaveLocation;
 
 function onInit() {
     mapService.initMap()
         .then(() => {
             console.log('Map is ready');
+            locService.getLocs()
         })
         .catch(() => console.log('Error: cannot init map'));
 }
@@ -53,4 +54,10 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
+}
+
+function onSaveLocation() {
+    const name = document.querySelector('#user-input').value
+    console.log(name)
+    locService.saveLocation(name)
 }

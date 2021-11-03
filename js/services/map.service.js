@@ -19,8 +19,10 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             console.log('Map!', gMap);
 
             let infoWindow = new google.maps.InfoWindow({
+                content: "Click the map to get Lat/Lng!",
                 position: { lat, lng },
             });
+            infoWindow.open(gMap);
             gMap.addListener("click", (mapsMouseEvent) => {
                 infoWindow.close();
                 
@@ -28,7 +30,10 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     position: mapsMouseEvent.latLng,
                 });
                 infoWindow.setContent(
-                    JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2)
+                    `<p>Do you want to save this location?</p>
+                    <p>What is the name?</p>
+                    <input id="user-input" type="text" value="" />
+                    <button class="save-user-input" onclick="onSaveLocation(this.value)">save</button>`
                 );
                 infoWindow.open(gMap);
             });

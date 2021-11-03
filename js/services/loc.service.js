@@ -1,24 +1,26 @@
-
+import { utils } from './utils.service.js'
+import { storageService } from './storage.service.js'
 export const locService = {
-    getLocs
+    getLocs,
+    saveLocation
 }
+const KEY = 'locationDb'
 
-
-const locs = [
-    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 }, 
-    { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
-]
-
-
-const locs = [
-    { id:_makeId(), name: 'Greatplace', lat: 32.047104, lng: 34.832384, 
-    weather, createdAt: Date.now() , updatedAt: Date.now()}, 
-
-    { id:_makeId(), name: 'Neveragain', lat: 32.047104, lng: 34.832384,
-     weather, createdAt: Date.now() , updatedAt: Date.now()}, 
-]
+let locs;
 
 function getLocs() {
+    locs = storageService.loadFromStorage(KEY)
+    if (!locs || !locs.length) locs = [
+        {
+            id: utils.makeId(), name: 'Greatplace', lat: 32.047104, lng: 34.832384,
+            createdAt: Date.now(), updatedAt: Date.now()
+        },
+
+        {
+            id: utils.makeId(), name: 'Neveragain', lat: 32.047104, lng: 34.832384,
+            createdAt: Date.now(), updatedAt: Date.now()
+        },
+    ]
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(locs);
@@ -26,4 +28,15 @@ function getLocs() {
     });
 }
 
+function saveLocation(name, lat, lng){
+    const location = getEmptyLocation(name)
+    locs.push(location)
+    storageService.saveToStorage(KEY, locs)
+}
 
+function getEmptyLocation(name, lat, lng){
+    return {
+        id: utils.makeId(), name, lat, lng,
+        createdAt: Date.now(), updatedAt: Date.now()
+    }
+}
