@@ -10,6 +10,7 @@ window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.onSaveLocation = onSaveLocation;
 window.onDelete = onDelete;
+window.onSearchLocation = onSearchLocation
 
 function onInit() {
     mapService.initMap()
@@ -45,12 +46,10 @@ function onGetLocs() {
                 <p class:"name">Location Name: ${loc.name}</p>
                 <p class:"lat">Location Lat: ${loc.lat}</p>
                 <p class:"lng">Location Lng: ${loc.lng}</p>
-                <p class:"createdAt"> Location created At: ${loc.updatedAt}</p>
-                <p class:"updatedAt">Location updated At: ${loc.updatedAt}</p>
+                <p class:"createdAt"> Location created At: ${(new Date(loc.createdAt) + '').slice(0, 24)}</p>
+                <p class:"updatedAt">Location updated At: ${(new Date(loc.updatedAt) + '').slice(0, 24)}</p>
                 <button onclick="onPanTo(${loc.lat},${loc.lng})" class="btn-pan btn-design">Go</button>
                 <button onclick="onDelete('${loc.id}')" class="btn-pan btn-design">Delete</button>
-
-
                 </div>`
             })  
             document.querySelector('.locs').innerHTML = strHtml.join('')
@@ -69,15 +68,12 @@ function onGetUserPos() {
             console.log('err!!!', err);
         })
 }
-function onPanTo(lat, lng) {
-    console.log(lat);
-        console.log(lng);
 
+function onPanTo(lat, lng) {
     mapService.panTo(lat, lng);
 }
 
 function onDelete(id) {
-    // console.log(id);
     locService.deleteLoc(id)
     onGetLocs()
 }
@@ -86,8 +82,12 @@ function onSaveLocation() {
     const name = document.querySelector('.user-input').value
     const lat = document.querySelector('.gmap-input').dataset.lat
     const lng = document.querySelector('.gmap-input').dataset.lng
-    console.log(name, lat, lng)
+
     locService.saveLocation(name, lat, lng)
     const infoWindows = mapService.getInfoWindow()
     infoWindows.close()
+}
+
+function onSearchLocation() {
+    mapService.searchLocation()
 }

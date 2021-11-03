@@ -19,14 +19,14 @@ body {
 }
 
 .map {
-    margin: 50px;
+    margin: 10px;
 }
 
 .saved-location {
     background-color: antiquewhite;
     margin-right: 10px;
     text-align: center;
-    width: 270px;
+    width: 350px;
     font-size: 14px
 }
 
@@ -35,3 +35,8 @@ body {
     flex-direction: row;
     align-items: center;
 }
+
+.info {
+    display: flex;  
+}
+

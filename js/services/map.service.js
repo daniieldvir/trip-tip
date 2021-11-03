@@ -2,7 +2,8 @@ export const mapService = {
     initMap,
     addMarker,
     panTo,
-    getInfoWindow
+    getInfoWindow,
+    searchLocation
 }
 
 var gMap;
@@ -35,7 +36,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     <p> </p>
                     <input class="gmap-input" data-lat="${mapsMouseEvent.latLng.lat()}" data-lng="${mapsMouseEvent.latLng.lng()}" hidden/>
                     <input class="user-input" type="text" value="" />
-                    <button class="save-user-input" onclick="onSaveLocation(this.value)">save</button>` 
+                    <button class="save-user-input" onclick="onSaveLocation(this.value)">save</button>`
                 );
                 infoWindow.close()
                 infoWindow.open(gMap);
@@ -57,6 +58,9 @@ function panTo(lat, lng) {
     gMap.panTo(laLatLng);
 }
 
+function getInfoWindow() {
+    return infoWindow
+}
 
 function _connectGoogleApi() {
     if (window.google) return Promise.resolve()
@@ -65,13 +69,22 @@ function _connectGoogleApi() {
     elGoogleApi.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyAiwks8bz483lqJ9B_71_Q0LqoN6LKT5LE`;
     elGoogleApi.async = true;
     document.body.append(elGoogleApi);
-
     return new Promise((resolve, reject) => {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
 
-function getInfoWindow() {
-    return infoWindow
+function searchLocation() {
+    if (window.google) return Promise.resolve()
+    var elGoogSearchApi = document.createElement('script');
+    elGoogSearchApi.src = `https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway+Mountain+View,+CA&key=YOUR_API_KEY+Mountain+View,+CA&key=AIzaSyAiwks8bz483lqJ9B_71_Q0LqoN6LKT5LE`;
+    console.log(' elGoogSearchApi.src', elGoogSearchApi.src);
+
+    elGoogSearchApi.async = true;
+    document.body.append(elGoogSearchApi);
+    return new Promise((resolve, reject) => {
+        elGoogSearchApi.onload = resolve;
+        elGoogSearchApi.onerror = () => reject('Google script failed to load')
+    })
 }
