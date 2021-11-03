@@ -1,0 +1,25 @@
+
+body {
+    background-color: rgb(240, 147, 60);
+}
+
+h1 {
+    font-family: 'Roboto'
+}
+
+.btn-section {
+    display: flex;
+    width: 700px;
+    height: 40px;    
+}
+
+.btn-design {
+    background-color: gray;
+    color: white;
+    margin-right: 10px;
+    border-style: none;
+}
+
+.map {
+    margin-top: 50px;
+}
